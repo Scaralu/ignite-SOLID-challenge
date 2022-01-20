@@ -1,0 +1,212 @@
+{
+ "openapi": "3.0.0",
+ "info": {
+    "title": "Solid Challenge",
+    "description": "This is an API for user creation/update and listing",
+    "version": "1.0.0",
+    "contact": {
+        "email": "scarano.dev@gmail.com"
+    }
+ },
+ "paths": {
+    "/users": {
+        "post": {
+            "tags": ["Users"],
+            "summary": "Create User",
+            "description": "Create a new user",
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "201": {
+                    "description": "Created",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "admin": {
+                                        "type": "boolean"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "created_at": {
+                                        "type": "string"
+                                    },
+                                    "updated_at": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "id": "aaaaaaaaa-aaaaaaaaa-aaaaaa-aaaaa",
+                                "name": "John Doe",
+                                "email": "john.doe@gmail.com",
+                                "admin": false,
+                                "created_at": "2021-03-10T22:10:32.992Z",
+                                "updated_at": "2021-03-10T22:10:32.992Z"
+                            }
+                        }
+                    }
+                },
+                "400": {
+                    "description": "User already exists"
+                }
+            }
+        },
+        "get": {
+            "tags": ["Users"],
+            "summary": "Seach for all users",
+            "description": "Searchs for all users (must admin)",
+            "parameters": {
+                "in": "header",
+                "name": "user_id",
+                "description": "User id of the admin search for users",
+                "required": true
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "admin": {
+                                            "type": "boolean"
+                                        },
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "created_at": {
+                                            "type": "string"
+                                        },
+                                        "updated_at": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "example": {
+                                "id": "aaaaaaaaa-aaaaaaaaa-aaaaaa-aaaaa",
+                                "name": "John Doe",
+                                "email": "john.doe@gmail.com",
+                                "admin": false,
+                                "created_at": "2021-03-10T22:10:32.992Z",
+                                "updated_at": "2021-03-10T22:10:32.992Z"
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "User without permission"
+                }
+            }
+        }
+    },
+    "/users/{user_id}": {
+        "get": {
+            "tags": ["Users"],
+            "summary": "Seach for specific user profile",
+            "description": "Searchs for a user profile",
+            "parameters": {
+                "in": "query",
+                "name": "user_id",
+                "description": "User id of the searched profile",
+                "required": true
+            },
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "admin": {
+                                        "type": "boolean"
+                                    },
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "created_at": {
+                                        "type": "string"
+                                    },
+                                    "updated_at": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            "example": {
+                                "id": "aaaaaaaaa-aaaaaaaaa-aaaaaa-aaaaa",
+                                "name": "John Doe",
+                                "email": "john.doe@gmail.com",
+                                "admin": false,
+                                "created_at": "2021-03-10T22:10:32.992Z",
+                                "updated_at": "2021-03-10T22:10:32.992Z"
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "User not found"
+                }
+            }
+        },
+        "patch": {
+            "tags": ["Users"],
+            "summary": "Turn user admin",
+            "description": "Turn user ADMIN true",
+            "parameters": {
+                "in": "query",
+                "name": "user_id",
+                "description": "User id of the updated profile",
+                "required": true
+            },
+            "responses": {
+                "200": {
+                    "description": "Success"
+                },
+                "400": {
+                    "description": "User without permission"
+                }
+            }
+        }
+    }
+ }
+}
